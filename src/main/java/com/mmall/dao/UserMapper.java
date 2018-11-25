@@ -2,6 +2,7 @@ package com.mmall.dao;
 
 import com.mmall.pojo.User;
 import com.mmall.pojo.UserExample;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     /**
@@ -59,4 +60,8 @@ public interface UserMapper {
      * @mbggenerated Fri Nov 23 16:17:54 CST 2018
      */
     int updateByPrimaryKey(User record);
+
+    int checkUsername(String username);
+
+    User selectLogin(@Param("username") String username, @Param("password") String password);
 }
