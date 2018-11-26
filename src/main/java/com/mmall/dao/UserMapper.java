@@ -76,5 +76,6 @@ public interface UserMapper {
 
     int checkPassword(@Param(value = "password") String password,@Param("userId") Integer userId);
 
-    ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user);
+    int checkEmailByUserId(@Param(value="email") String email,@Param(value="userId") Integer userId);
+
 }
