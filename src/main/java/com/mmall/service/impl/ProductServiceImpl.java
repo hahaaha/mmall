@@ -2,9 +2,13 @@ package com.mmall.service.impl;
 
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
+import com.mmall.dao.CategoryMapper;
 import com.mmall.dao.ProductMapper;
+import com.mmall.pojo.Category;
 import com.mmall.pojo.Product;
 import com.mmall.service.IProductService;
+import com.mmall.util.DateTimeUtil;
+import com.mmall.util.PropertiesUtil;
 import com.mmall.vo.ProductDetailVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     public ServerResponse saveOrUpdateProduct(Product product) {
         if(product != null) {
@@ -57,7 +63,7 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createByErrorMessage("修改产品销售状态失败");
     }
 
-    public ServerResponse<Object> mamgeProductDetail(Integer productId) {
+    public ServerResponse<ProductDetailVo> mangeProductDetail(Integer productId) {
         if(productId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
@@ -67,10 +73,11 @@ public class ProductServiceImpl implements IProductService {
         }
         // vo对象--value object
         //pojo->bo->vo
-        ProductDetailVo productDetailVo =
+        ProductDetailVo productDetailVo = assembleProductDetailVo(product);
+        return ServerResponse.createBySuccess(productDetailVo);
     }
 
-    private assembleProductDetailVo(Product product) {
+    private ProductDetailVo assembleProductDetailVo(Product product) {
         ProductDetailVo productDetailVo = new ProductDetailVo();
         productDetailVo.setId(product.getId());
         productDetailVo.setSubtitle(product.getSubtitle());
@@ -84,10 +91,20 @@ public class ProductServiceImpl implements IProductService {
         productDetailVo.setStock(product.getStock());
 
         // imageHost
+        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix","http://localhost:8080/"));
         // parentCategoryId
+        Category category = categoryMapper.selectByPrimaryKey(product.getCategoryId());
+        if(category == null) {
+            // 默认根节点
+            productDetailVo.setParentCategoryId(0);
+        }else {
+            productDetailVo.setParentCategoryId(category.getParentId());
+        }
         // createTime
+        productDetailVo.setCreateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
         // updateTime
-
+        productDetailVo.setUpateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
+        return productDetailVo;
 
     }
 }
