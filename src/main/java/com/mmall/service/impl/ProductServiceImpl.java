@@ -1,5 +1,6 @@
 package com.mmall.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CategoryMapper;
@@ -13,6 +14,8 @@ import com.mmall.vo.ProductDetailVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("iProductService")
 public class ProductServiceImpl implements IProductService {
@@ -107,4 +110,13 @@ public class ProductServiceImpl implements IProductService {
         return productDetailVo;
 
     }
+
+    public ServerResponse getProductList(int pageNum,int pageSize) {
+        // startPage--start
+        // 填充自己的sql查询逻辑
+        // pageHelper - 收尾
+        PageHelper.startPage(pageNum,pageSize);
+        List<Product> productList = productMapper.
+    }
+
 }
