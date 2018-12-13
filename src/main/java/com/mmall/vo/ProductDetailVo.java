@@ -14,7 +14,7 @@ public class ProductDetailVo {
     private Integer stock;
     private Integer status;
     private String createTime;
-    private String upateTime;
+    private String updateTime;
 
     private String imageHost;
     private Integer parentCategoryId;
@@ -108,11 +108,11 @@ public class ProductDetailVo {
     }
 
     public String getUpateTime() {
-        return upateTime;
+        return updateTime;
     }
 
     public void setUpateTime(String upateTime) {
-        this.upateTime = upateTime;
+        this.updateTime = upateTime;
     }
 
     public String getImageHost() {
