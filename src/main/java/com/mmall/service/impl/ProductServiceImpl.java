@@ -145,7 +145,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, int pageNum,int pageSize) {
-        PageHelper.startPage(pageNum, pagesize);
+        PageHelper.startPage(pageNum, pageSize);
         if(StringUtils.isNotBlank(productName)) {
             productName = new StringBuilder().append("%").append(productName).append("%").toString();
         }
