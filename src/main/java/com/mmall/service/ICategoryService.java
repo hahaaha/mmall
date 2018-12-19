@@ -13,7 +13,7 @@ public interface ICategoryService {
 
     ServerResponse<List<Category>> getChildrenParallelCategory(Integer categoryId);
 
-    ServerResponse selectCategoryAndchildrenById(Integer categoryId);
+    ServerResponse<List<Integer>> selectCategoryAndchildrenById(Integer categoryId);
 
 
 }
