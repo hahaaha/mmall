@@ -161,4 +161,14 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createBySuccess(pageResult);
     }
 
+    public ServerResponse<ProductDetailVo> getProductDetail(Integer productId) {
+        if(productId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if(product == null) {
+            return ServerResponse.createByErrorMessage("产品已下架或者删除");
+        }
+    }
+
 }
