@@ -35,7 +35,7 @@ public class ProductServiceImpl implements IProductService {
 
     public ServerResponse saveOrUpdateProduct(Product product) {
         if(product != null) {
-            if(StringUtils.isBlank(product.getSubImages())) {
+            if(StringUtils.isNotBlank(product.getSubImages())) {
                 String[] subImageArray = product.getSubImages().split(",");
                 if(subImageArray.length > 0) {
                     product.setMainImage(subImageArray[0]);
@@ -212,7 +212,18 @@ public class ProductServiceImpl implements IProductService {
                 PageHelper.orderBy(orderByArray[0] + " " +orderByArray[1]);
             }
         }
-        List<Product> productList = 
+        List<Product> productList = productMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword)?null: keyword,categroyIdList.size() ==0?null:categroyIdList );
+
+        List<ProductListVo> productListVoList = Lists.newArrayList();
+        for(Product product:productList) {
+            ProductListVo productListVo = assembleProductListVo(product);
+            productListVoList.add(productListVo);
+        }
+        PageInfo pageInfo = new PageInfo(productList);
+        pageInfo.setList(productListVoList);
+
+        return ServerResponse.createBySuccess(pageInfo);
+
     }
 
 }
