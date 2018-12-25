@@ -8,7 +8,7 @@ public class CartVo {
     private List<CartProductVo> cartProductVoList;
     private BigDecimal cartTotalPrice;
     private Boolean allChecked;
-    private String iamgeHost;
+    private String imageHost;
 
     public List<CartProductVo> getCartProductVoList() {
         return cartProductVoList;
@@ -34,11 +34,11 @@ public class CartVo {
         this.allChecked = allChecked;
     }
 
-    public String getIamgeHost() {
-        return iamgeHost;
+    public String getImageHost() {
+        return imageHost;
     }
 
-    public void setIamgeHost(String iamgeHost) {
-        this.iamgeHost = iamgeHost;
+    public void setImageHost(String imageHost) {
+        this.imageHost = imageHost;
     }
 }

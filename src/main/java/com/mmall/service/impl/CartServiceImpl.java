@@ -71,7 +71,7 @@ public class CartServiceImpl implements ICartService {
         if(CollectionUtils.isEmpty(productList)) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-        cartMapper.deleteByUserIdProductId(userId,productList);
+        cartMapper.deleteByUserIdProductIds(userId,productList);
         return this.list(userId);
 
     }
@@ -113,6 +113,7 @@ public class CartServiceImpl implements ICartService {
                     cartProductVo.setProductMainImage(product.getMainImage());
                     cartProductVo.setProductName(product.getName());
                     cartProductVo.setProductSubtitle(product.getSubtitle());
+                    cartProductVo.setProductStatus(product.getStatus());
                     cartProductVo.setProductPrice(product.getPrice());
                     cartProductVo.setProductStock(product.getStock());
 
@@ -149,7 +150,7 @@ public class CartServiceImpl implements ICartService {
         cartVo.setCartTotalPrice(cartTotalPrice);
         cartVo.setCartProductVoList(cartProductVoList);
         cartVo.setAllChecked(this.getAllCheckedStatus(userId));
-        cartVo.setIamgeHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        cartVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
         return cartVo;
     }
 
